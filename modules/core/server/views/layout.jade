@@ -1,0 +1,36 @@
+//
+   Created by Kyle on 7/2/2016.
+
+doctype html
+html(lang="en")
+    head
+        meta(charset="utf-8")
+        meta(http-equiv="X-UA-Compatible",content="IE=edge,chrome=1")
+        meta(name="viewport", content="width=device-width,initial-scale=1,maximum-scale=1")
+        base(href="/")
+        title(page-title)
+        meta(name="description", content="#{description}")
+        meta(name="fragment", content="!")
+
+        meta(name="apple-mobile-web-app-capable", content="yes")
+        meta(name="apple-mobile-web-app-status-bar-style", content="black")
+        link(href="#{favicon}",rel="shortcut icon", type="image/x-icon")
+
+        each cssFile in cssFiles
+            link(rel="stylesheet", href="#{cssFile}")
+
+    body(class="ng-cloak")
+        header(ng-include="'/modules/core/client/views/header.html'", class="navbar navbar-fixed-top navbar-inverse")
+        section(class="content")
+            section(class="container")
+                block content
+
+
+        //script(type="text/javascript")
+        //    var user = {{ user|json|safe }};
+
+        each jsFile in jsFiles
+            script(type="text/javascript", src="#{jsFile}")
+
+        if livereload
+            script(type="text/javascript", src="#{host}:35729/livereload.js")

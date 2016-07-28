@@ -1,0 +1,32 @@
+{
+  "name": "personal-app",
+  "description": "My personal app in daily life",
+  "main": "index.js",
+  "authors": [
+    "wkm23@126.com <wkm23@126.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.7",
+    "angular-bootstrap": "^1.3.3",
+    "angular-messages": "^1.5.7",
+    "angular-mocks": "^1.5.7",
+    "angular-ui-router": "^0.3.1",
+    "bootstrap": "^3.3.6",
+    "owasp-password-strength-test": "^1.3.0",
+    "moment": "^2.14.1",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.37",
+    "angular-animate": "^1.5.7",
+    "angular-touch": "^1.5.7",
+    "angular-resource": "^1.5.8"
+  }
+}

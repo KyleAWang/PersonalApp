@@ -1,0 +1,378 @@
+<!--<div class="row" ng-controller="dateTimeController">-->
+<div class="row">
+    <form name="$scope.orderCreateForm" ng-submit="orderCreate($scope.orderCreateForm.$valid)" novalidate
+          autocomplete="off">
+
+        <uib-accordion close-others="oneAtATime">
+            <uib-accordion-group template-url="group-template.html" is-open="status.general_open">
+                <uib-accordion-heading>
+                    General<i class="pull-right glyphicon"
+                              ng-class="{'glyphicon-chevron-down': status.general_open, 'glyphicon-chevron-right': !status.general_open}"/>
+                </uib-accordion-heading>
+                <div class="col-md-6 col-lg-4">
+                    <div class="form-group" show-errors>
+                        <label for="orderId">Order No.</label>
+                        <input type="text" id="orderId" name="orderId" class="form-control" ng-model="order.orderId"
+                               placeholder="Order No." required>
+                        <div ng-messages="$scope.orderCreateForm.orderId.$error" role="alert">
+                            <p class="help-block error-text" ng-message="required">Order No. is required</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="form-group" show-errors>
+                        <label for="subtotal">Subtotal</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="number" id="subtotal" name="subtotal"
+                                   class="form-control" ng-model="order.subtotal" min="0"
+                                   placeholder="Amount" required>
+                        </div>
+                        <div ng-messages="$scope.orderCreateForm.subtotal.$error" role="alert">
+                            <p class="help-block error-text" ng-message="required">Subtotal is required</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix visible-md-block"></div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="form-group" show-errors>
+                        <label for="created">Created</label>
+                        <div class='input-group date' id='datetimepicker1' style="width:100%">
+                            <input type='text' class="form-control" name="created" id="created" required
+                                   ng-model="order.created" placeholder="Date" data-date-time-picker/>
+                    <!--<span class="input-group-addon">-->
+                        <!--<span class="glyphicon glyphicon-calendar"></span>-->
+                    <!--</span>-->
+                        </div>
+                        <div ng-messages="$scope.orderCreateForm.created.$error" role="alert">
+                            <p class="help-block error-text" ng-message="required">Created Time is required</p>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#datetimepicker1').datetimepicker({
+                        });
+                    });
+
+                </script>
+                <div class="clearfix visible-lg-block"></div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="form-group" show-errors>
+                        <label for="status">Status</label>
+                        <select name="status" id="status" class="form-control"
+                                ng-model="order.status">
+                            <option value="">--Choose one--</option>
+                            <option value="Submitted">Submitted</option>
+                            <option value="Delivery">Delivery</option>
+                            <option value="Customers">Customers</option>
+                            <option value="DeliveryL">DeliveryL</option>
+                            <option value="Signed">Signed</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="clearfix visible-md-block"></div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="form-group" show-errors>
+                        <label for="shipping_fee">Shipping Fee</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="number" id="shipping_fee" name="shipping_fee"
+                                   class="form-control" ng-model="order.shiping_fee"
+                                   placeholder="Amount">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="form-group" show-errors>
+                        <label for="local_fee">Local Shipping Fee</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="number" id="local_fee" name="local_fee"
+                                   class="form-control" ng-model="order.local_fee"
+                                   placeholder="Amount">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="form-group" show-errors>
+                        <label for="total_cost">Total Cost</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input id="total_cost" name="total_cost"
+                                   class="form-control" ng-model="order.totalCost"
+                                   placeholder="Amount" required>
+                        </div>
+                        <div ng-messages="$scope.orderCreateForm.total_cost.$error" role="alert">
+                            <p class="help-block error-text" ng-message="required">Total cost is required</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="form-group" show-errors>
+                        <label for="total_rmbcost">Total Cost(￥){{rate}}</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">￥</span>
+                            <input id="total_rmbcost" name="total_rmbcost" ng-model="order.totalRmbCost"
+                                   class="form-control"
+                                   placeholder="Amount" required>
+                        </div>
+                        <div ng-messages="$scope.orderCreateForm.total_rmbcost.$error" role="alert">
+                            <p class="help-block error-text" ng-message="required">Total RMB cost is required</p>
+                        </div>
+                    </div>
+                </div>
+
+            </uib-accordion-group>
+
+            <uib-accordion-group template-url="group-template.html" is-open="status.shipping_open">
+                <uib-accordion-heading>
+                    Shipping<i class="pull-right glyphicon"
+                               ng-class="{'glyphicon-chevron-down': status.shipping_open, 'glyphicon-chevron-right': !status.shipping_open}"/>
+                </uib-accordion-heading>
+                <div class="pull-right">
+                    <button class="btn btn-default" type="button" ng-click="addShipping()">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </div>
+                <div class="clearfix visible-md-block visible-lg-block"></div>
+                <div ng-repeat="shipping in shippingTemplates track by $index">
+                    <ng-include src="shipping"></ng-include>
+                </div>
+
+                <script type="text/ng-template" id="shipping_temp">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="form-group" show-errors>
+                            <label for="shipping_no_{{$index}}">No.</label>
+                            <input class="form-control" name="shipping_no_{{$index}}" id="shipping_no_{{$index}}"
+                                   ng-model="order.shipping[$index].no" placeholder="No."
+                                   ng-change="shippingUrl($index)">
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="form-group" show-errors>
+                            <label for="shipping_url_{{$index}}">URL</label>
+                            <input class="form-control" name="shipping_url_{{$index}}" id="shipping_url_{{$index}}"
+                                   ng-model="order.shipping[$index].url" placeholder="URL">
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="form-group" show-errors>
+                            <label for="shipping_items_{{$index}}">Items</label>
+                            <textarea class="form-control" name="shipping_items_{{$index}}"
+                                   id="shipping_items_{{$index}}" rows="2"
+                                   ng-model="order.shipping[$index].items" placeholder="Items"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="form-group" show-errors>
+                            <label for="shipping_status_{{$index}}">Status</label>
+                            <select name="shipping_status_{{$index}}" id="shipping_status_{{$index}}" class="form-control"
+                                    ng-model="order.shipping[$index].status">
+                                <option value="">--Choose one--</option>
+                                <option value="Submitted">Submitted</option>
+                                <option value="Delivery">Delivery</option>
+                                <option value="Customers">Customers</option>
+                                <option value="DeliveryL">DeliveryL</option>
+                                <option value="Signed">Signed</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <button class="btn btn-default" type="button" ng-click="addShipping()">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                        <button class="btn btn-default" type="button" ng-click="removeShipping()">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </div>
+                    <div class="clearfix visible-md-block visible-lg-block"></div>
+                </script>
+            </uib-accordion-group>
+
+
+            <uib-accordion-group template-url="group-template.html" is-open="status.item_open">
+                <uib-accordion-heading>
+                    Order Items<i class="pull-right glyphicon"
+                                  ng-class="{'glyphicon-chevron-down': status.item_open, 'glyphicon-chevron-right': !status.item_open}"/>
+                </uib-accordion-heading>
+
+                <div class="pull-right">
+                    <button class="btn btn-default" type="button" ng-click="addItem()">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </div>
+                <div class="clearfix visible-md-block visible-lg-block"></div>
+                <div ng-repeat="item in itemTemplates track by $index">
+                    <ng-include src="item"></ng-include>
+                </div>
+
+                <script type="text/ng-template" id="item_temp">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="form-group" show-errors>
+                            <label for="item_name_{{$index}}">Name</label>
+                            <input type="text" class="form-control" name="item_name_{{$index}}"
+                                   id="item_name_{{$index}}"
+                                   ng-model="order.items[$index].name" placeholder="Product Name">
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="form-group" show-errors>
+                            <label for="item_price_{{$index}}">Price</label>
+                            <input type="number" class="form-control" name="item_price_{{$index}}"
+                                   id="item_price_{{$index}}"
+                                   ng-model="order.items[$index].price"
+                                   ng-change="order.items[$index].subtotal=order.items[$index].quantity*order.items[$index].price"
+                                   placeholder="Price" min="0">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-1">
+                        <div class="form-group" show-errors>
+                            <label for="item_quantity_{{$index}}">Quantity</label>
+                            <input type="number" class="form-control" name="item_quantity_{{$index}}"
+                                   id="item_quantity_{{$index}}"
+                                   ng-model="order.items[$index].quantity"
+                                   ng-change="order.items[$index].subtotal=order.items[$index].quantity*order.items[$index].price"
+                                   placeholder="0" min="0">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-1">
+                        <div class="form-group" show-errors>
+                            <label for="item_sum_{{$index}}">Sum</label>
+                            <input type="number" class="form-control" name="item_sum_{{$index}}"
+                                   id="item_sum_{{$index}}"
+                                   ng-model="order.items[$index].subtotal" placeholder="0" min="0">
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group" show-errors>
+                            <label for="item_url_{{$index}}">Url</label>
+                            <input type="text" class="form-control" name="item_url_{{$index}}" id="item_url_{{$index}}"
+                                   ng-model="order.items[$index].url" placeholder="Product Url">
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <button class="btn btn-default" type="button" ng-click="addItem()">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                        <button class="btn btn-default" type="button" ng-click="removeItem()">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </div>
+                    <div class="clearfix visible-md-block visible-lg-block"></div>
+                </script>
+            </uib-accordion-group>
+
+            <uib-accordion-group template-url="group-template.html" is-open="status.address_open">
+                <uib-accordion-heading>
+                    Address<i class="pull-right glyphicon"
+                              ng-class="{'glyphicon-chevron-down': status.address_open, 'glyphicon-chevron-right': !status.address_open}"/>
+                </uib-accordion-heading>
+                <div class="panel-body">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="form-group" show-errors>
+                            <label for="address_name">Name</label>
+                            <input type="text" class="form-control" name="address_name" id="address_name"
+                                   ng-model="order.address.name" placeholder="Name" required>
+                            <div ng-messages="$scope.orderCreateForm.address_name.$error" role="alert">
+                                <p class="help-block error-text" ng-message="required">Name is required</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="form-group" show-errors>
+                            <label for="address_email">Email</label>
+                            <input type="email" class="form-control" name="address_email" id="address_email"
+                                   ng-model="order.address.email" placeholder="Email">
+                            <div ng-messages="$scope.orderCreateForm.address_email.$error" role="alert">
+                                <p class="help-block error-text" ng-message="email">Email is invalid</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix visible-md-block"></div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="form-group" show-errors>
+                            <label for="address_tel">Tel</label>
+                            <input type="tel" class="form-control" name="address_tel" id="address_tel"
+                                   ng-model="order.address.tel" placeholder="Tel" required>
+                            <div ng-messages="$scope.orderCreateForm.address_tel.$error" role="alert">
+                                <p class="help-block error-text" ng-message="required">Tel is required</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="form-group" show-errors>
+                            <label for="address_zip">Zip</label>
+                            <input type="text" class="form-control" name="address_zip" id="address_zip"
+                                   ng-model="order.address.zip" placeholder="zip">
+                        </div>
+                    </div>
+                    <div class="clearfix visible-md-block visible-lg-block"></div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="form-group" show-errors>
+                            <label for="address_weight">Weight</label>
+                            <input type="number" class="form-control" name="address_weight" id="address_weight"
+                                   ng-model="order.address.weight" placeholder="Product Weight" min="0" required>
+                            <div ng-messages="$scope.orderCreateForm.address_weight.$error" role="alert">
+                                <p class="help-block error-text" ng-message="required">Weight is required</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="form-group" show-errors>
+                            <label for="address_address">Address</label>
+                            <input type="text" class="form-control" name="address_address" id="address_address"
+                                   ng-model="order.address.address" placeholder="Address" required>
+                            <div ng-messages="$scope.orderCreateForm.address_address.$error" role="alert">
+                                <p class="help-block error-text" ng-message="required">Address is required</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix visible-md-block"></div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="form-group" show-errors>
+                            <label for="address_ID">ID Card</label>
+                            <input type="text" class="form-control" name="address_ID" id="address_ID"
+                                   ng-model="order.address.ID" placeholder="ID">
+                        </div>
+                    </div>
+                </div>
+            </uib-accordion-group>
+        </uib-accordion>
+        <div class="clearfix"></div>
+        <div class="pull-right">
+            <span ng-switch="!order._id">
+                <span ng-switch-when="true">
+            <button class="btn btn-default" type="reset">Reset</button>
+                </span>
+                <span ng-switch-default>
+            <button class="btn btn-default" role="link" ui-sref="order-list" type="button">Cancel</button>
+                </span>
+            </span>
+            <button class="btn btn-primary" type="submit">{{SubmitBtn}}</button>
+        </div>
+        <div class="clearfix"></div>
+        <uib-alert type="danger" ng-show="error" class="text-center text-danger">
+            <span ng-bind="error"></span>
+        </uib-alert>
+    </form>
+</div>
+
+
+<script type="text/ng-template" id="group-template.html">
+    <div class="panel {{panelClass || 'panel-default'}}">
+        <div class="panel-heading" style="background-image: linear-gradient(to bottom, #d9edf7 0%, #c4e3f3 100%);">
+            <h4 class="panel-title">
+                <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()"
+                   uib-accordion-transclude="heading">
+            <span uib-accordion-header ng-class="{'text-muted': isDisabled}">
+              {{heading}}
+            </span>
+                </a>
+            </h4>
+        </div>
+        <div class="panel-collapse collapse" uib-collapse="!isOpen">
+            <div class="panel-body" ng-transclude></div>
+        </div>
+    </div>
+</script>

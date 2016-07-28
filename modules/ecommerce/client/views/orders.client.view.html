@@ -1,0 +1,34 @@
+<div class="order_list" ng-if="vm.orders && vm.orders.length > 0">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>No.</th>
+            <th>Created</th>
+            <th>Subtotal</th>
+            <th>Cost</th>
+            <th>Items</th>
+            <th>Shipping</th>
+            <th>Address</th>
+            <th>Operation</th>
+        </tr>
+        </thead>
+        <tr ng-repeat="order in vm.orders">
+            <td>{{$index+1}}</td>
+            <td>{{order.orderId}}</td>
+            <td>{{order.created | date:'short'}}</td>
+            <td>${{order.subtotal}}</td>
+            <td><p ng-if="order.totalRmbCost">￥{{order.totalRmbCost}}</p></td>
+            <td><p ng-repeat="item in order.items"><a href="{{item.url}}" target="_blank">{{item.name}},{{item.quantity}}*{{item.price}}</a>
+            </p></td>
+            <td><p ng-repeat="s in order.shipping"><a href="{{s.url}}" target="_blank">{{s.no}}</a>, <span style="color:#ff0000">{{s.status}}</span><br>{{s.items}}</p></td>
+            <td>{{order.address.name}},{{order.address.address}}</td>
+            <td><a role="button" ng-click="vm.fillAOrder(order.orderId)">Change</a><br>
+                <a role="button"  ng-click="vm.removeOrder(order._id)">Remove</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="text-center" ng-if="!vm.orders || vm.orders.length === 0">
+    <h3>Order is empty</h3>
+</div>
