@@ -31,9 +31,9 @@ describe('Order Model Unit Tests:', function () {
             totalRmbCost: 508.97,
             address:{
                 name: '张小燕',
-                tel: '15801859839',
+                tel: '1111111',
                 weight: 3880,
-                address: '中国上海市杨浦区控江路1505弄20号401'
+                address: '中国上海市xxxxxxxxxx'
             }
         });
         order2 = new Order({
@@ -44,9 +44,9 @@ describe('Order Model Unit Tests:', function () {
             totalRmbCost: 508.97,
             address:{
                 name: '张小燕',
-                tel: '15801859839',
+                tel: '1111111111111',
                 weight: 3880,
-                address: '中国上海市杨浦区控江路1505弄20号401'
+                address: '中国上海市xxxxxxxxxxx'
             }
         });
         done();

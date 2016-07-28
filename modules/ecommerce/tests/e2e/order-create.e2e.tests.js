@@ -35,11 +35,11 @@ describe('Order create Tests:', function () {
         totalRmbCost: 500,
         status: '已发货',
         address: {
-            name: '	张小燕',
-            tel: '15801859839',
+            name: '	张xx',
+            tel: '11111111',
             zip: '200093',
-            address: '中国上海市杨浦区控江路1505弄20号401',
-            ID: '320682198310146143',
+            address: '中国上海市xxxxxxxxxxxxxx',
+            ID: '320xxxxxxxxxxxxx',
             weight: 4020
         }
     };
