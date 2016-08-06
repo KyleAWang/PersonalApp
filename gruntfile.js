@@ -20,7 +20,7 @@ module.exports = function (grunt) {
         watch: {
             serverViews: {
                 files: defaultAssets.server.views,
-                options:{
+                options: {
                     debounceDelay: 300,
                     livereload: true
                 }
@@ -78,8 +78,8 @@ module.exports = function (grunt) {
                 logConcurrentOutput: true
             }
         },
-        less:{
-            dist:{
+        less: {
+            dist: {
                 files: [{
                     expand: true,
                     src: defaultAssets.client.less,
@@ -90,7 +90,7 @@ module.exports = function (grunt) {
                 }]
             }
         },
-        'node-inspector':{
+        'node-inspector': {
             custom: {
                 options: {
                     'web-port': 1337,
@@ -112,7 +112,7 @@ module.exports = function (grunt) {
             options: {
                 configFile: 'protractor.conf.js',
                 noColor: false,
-                webdriverManagerUpdate:true
+                webdriverManagerUpdate: true
             },
             e2e: {
                 options: {
@@ -126,28 +126,42 @@ module.exports = function (grunt) {
                 reporter: 'spec',
                 timeout: 10000
             }
+        },
+        copy: {
+            main: {
+                files: [
+                    {
+                        expand: true,
+                        src: ['modules/core/client/app/*.js'],
+                        rename: function (dest, src) {
+                            return src.substr(0, src.length - 3)+'.ts';
+                        }
+                    },
+
+                ]
+            }
         }
     });
-    
+
     require('load-grunt-tasks')(grunt);
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-protractor-coverage');
-    
+
     grunt.task.registerTask('server', 'Starting the server', function () {
         var done = this.async();
-        
+
         var path = require('path');
         var app = require(path.resolve('./config/lib/app'));
         var server = app.start(function () {
             done();
         });
     });
-    
+
     grunt.task.registerTask('dropdb', 'drop the database', function () {
         var done = this.async();
-        
+
         var mongoose = require('./config/lib/mongoose');
-        
+
         mongoose.connect(function (db) {
             db.connection.db.dropDatabase(function (err) {
                 if (err) {
@@ -159,12 +173,14 @@ module.exports = function (grunt) {
             })
         })
     });
-    
+
     grunt.registerTask('test:server', ['env:test', 'server', 'mochaTest']);
     grunt.registerTask('test:client', ['karma:unit']);
     grunt.registerTask('test:e2e', ['env:test', 'dropdb', 'server', 'protractor']);
-    
-    
+
+    grunt.registerTask('test:copyjs', ['copy']);
+
+
     grunt.registerTask('default', ['env:dev', 'less', 'concurrent:default']);
 };
     
