@@ -76,7 +76,7 @@ module.exports = function (grunt) {
             debug: ['nodemon', 'watch', 'node-inspector'],
             options: {
                 logConcurrentOutput: true
-            }
+            }   
         },
         less:{
             dist:{

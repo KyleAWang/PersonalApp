@@ -94,7 +94,7 @@
         function shippingUrl(index) {
             var sno = $scope.order.shipping[index].no;
             if (sno && sno.toUpperCase().substr(0, 4) === 'EF10'){
-                $scope.order.shipping[index].url='http://www2.efspost.com/index/track?s='+sno;
+                $scope.order.shipping[index].url='http://www.efspost.com/tool/track?s='+sno;
             }else {
                 $scope.order.shipping[index].url='http://member.efspost.net/cgi-bin/GInfo.dll?EmmisTrack?cno='+sno;
             }

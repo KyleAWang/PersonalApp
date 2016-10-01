@@ -6,7 +6,7 @@ module.exports = {
         description: 'My personal daily application',
         keywords: 'daily life'
     },
-    port: process.env.PORT || 3000,
+    port: process.env.PORT || 3002,
     host: process.env.HOST || '0.0.0.0',
     templateEngine: 'jade',
     // Session Cookie settings
