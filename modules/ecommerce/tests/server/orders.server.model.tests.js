@@ -70,16 +70,45 @@ describe('Order Model Unit Tests:', function () {
         it('Should be correct when saving two similar orders', function (done) {
             order1.save(function (err, order1) {
                 should.not.exists(err);
-                console.log(order1);
 
                 order2.save(function (err, order2) {
-                    console.log(order2);
                     should.not.exists(err);
                     should.notEqual(order1.orderId, order2.orderId);
                     done();
                 })
             })
         })
+    });
+
+    describe('Get orders Tests', function () {
+        before(function (done) {
+            order1.save(function (err, order1) {
+                should.not.exists(err);
+
+                order2.save(function (err, order2) {
+                    should.not.exists(err);
+                    should.notEqual(order1.orderId, order2.orderId);
+                    done();
+                })
+            })
+        })
+
+        it('should be able to get all orders without problems', function (done) {
+            Order.find({}).exec(function (err, orders) {
+                should.not.exists(err);
+                should.equal(orders.length, 3);
+                done();
+            })
+        });
+
+        it ('should get one order for one call without problems', function (done) {
+            Order.find({}).skip(2).limit(1).exec(function (err, orders) {
+                should.not.exists(err);
+                should.equal(orders[0].orderId, '20160703202055');
+                done();
+            })
+        })
+        
     });
     
     

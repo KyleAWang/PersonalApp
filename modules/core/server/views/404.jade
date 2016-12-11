@@ -1,0 +1,7 @@
+extends ./layout
+
+h1 Page Not Found
+div(class="alert alert-danger", role='alert')
+    span( class='glyphicon glyphicon-exclamation-sign', aria-hidden='true')
+    span(class='sr-only') Error:
+    #{url} is not a valide path

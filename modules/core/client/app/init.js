@@ -14,6 +14,8 @@
 
     function bootstrapConfig($locationProvider, $httpProvider) {
         $locationProvider.html5Mode(true).hashPrefix('!');
+        
+        $httpProvider.interceptors.push('authInterceptor');
     }
 
     angular.element(document).ready(init);

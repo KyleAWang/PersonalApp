@@ -50,6 +50,7 @@ module.exports = {
         models: 'modules/*/server/models/**/*.js',
         routes: ['modules/!(core)/server/routes/**/*.js', 'modules/core/server/routes/**/*.js'],
         config: ['modules/*/server/config/*.js'],
+        policies: 'modules/*/server/policies/*.js',
         views: ['modules/*/server/views/*.jade']
     }
 };

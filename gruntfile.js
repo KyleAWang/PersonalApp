@@ -124,7 +124,8 @@ module.exports = function (grunt) {
             src: testAssets.tests.server,
             options: {
                 reporter: 'spec',
-                timeout: 10000
+                timeout: 10000,
+                grep: 'Order Model Unit Tests:'
             }
         }
     });
