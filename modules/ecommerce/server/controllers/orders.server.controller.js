@@ -8,7 +8,6 @@ var path = require('path'),
 
 
 exports.create = function (req, res) {
-    console.log('create*********');
     var order = new Order(req.body);
 
     order.save(function (err) {
@@ -27,14 +26,8 @@ exports.update = function (req, res) {
 
     var _order = req.order;
 
-    console.log('update****');
-    console.log(_id);
-    console.log(_order);
-    console.log(res.body);
 
     var order = req.body;
-    console.log(order.subtotal);
-    console.log(order._id);
 
 
     // console.log('************order:'+order._id+'  '+ order.orderId);
@@ -131,15 +124,33 @@ exports.delete = function (req, res) {
 };
 
 exports.list = function (req, res) {
-    Order.find().sort('-created').exec(function (err, orders) {
-        if (err){
-            return res.status(400).send({
-                message: errorHandler.getErrorMessage(err)
-            });
-        }else {
-            res.json(orders);
-        }
-    })
+    var offset = req.query.offset;
+    var pageno = req.query.pageno;
+    if (!isNaN(offset) && !isNaN(pageno)){
+        var skipno = (pageno - 1)*offset;
+        if (skipno < 0)
+            skipno = 0;
+        Order.find().sort('-created').skip(parseInt(skipno)).limit(parseInt(offset)).exec(function (err, orders) {
+            if (err){
+                return res.status(400).send({
+                    message: errorHandler.getErrorMessage(err)
+                });
+            }else {
+                res.json(orders);
+            }
+        })
+    }else{
+        Order.find().sort('-created').exec(function (err, orders) {
+            if (err){
+                return res.status(400).send({
+                    message: errorHandler.getErrorMessage(err)
+                });
+            }else {
+                res.json(orders);
+            }
+        })
+    }
+
 };
 
 exports.orderByOrderId = function (req, res, next, orderId) {

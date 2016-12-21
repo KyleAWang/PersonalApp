@@ -20,7 +20,8 @@ module.exports = {
                 'public/lib/angular-ui-router/release/angular-ui-router.js',
                 'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
                 'public/lib/owasp-password-strength-test/owasp-password-strength-test.js',
-                'public/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js'
+                'public/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
+                'public/lib/ngInfiniteScroll/build/ng-infinite-scroll.min.js'
             ],
             tests: ['public/lib/angular-mocks/angular-mocks.js']
         },

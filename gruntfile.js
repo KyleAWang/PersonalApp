@@ -125,7 +125,7 @@ module.exports = function (grunt) {
             options: {
                 reporter: 'spec',
                 timeout: 10000,
-                grep: 'Order Model Unit Tests:'
+                grep: 'Order CRUD tests'
             }
         }
     });

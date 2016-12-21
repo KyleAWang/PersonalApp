@@ -1,34 +1,86 @@
-<div class="order_list" ng-if="vm.orders && vm.orders.length > 0">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>No.</th>
-            <th>Created</th>
-            <th>Subtotal</th>
-            <th>Cost</th>
-            <th>Items</th>
-            <th>Shipping</th>
-            <th>Address</th>
-            <th>Operation</th>
-        </tr>
-        </thead>
-        <tr ng-repeat="order in vm.orders">
-            <td>{{$index+1}}</td>
-            <td>{{order.orderId}}</td>
-            <td>{{order.created | date:'short'}}</td>
-            <td>${{order.subtotal}}</td>
-            <td><p ng-if="order.totalRmbCost">￥{{order.totalRmbCost}}</p></td>
-            <td><p ng-repeat="item in order.items"><a href="{{item.url}}" target="_blank">{{item.name}},{{item.quantity}}*{{item.price}}</a>
-            </p></td>
-            <td><p ng-repeat="s in order.shipping"><a href="{{s.url}}" target="_blank">{{s.no}}</a>, <span style="color:#ff0000">{{s.status}}</span><br>{{s.items}}</p></td>
-            <td>{{order.address.name}},{{order.address.address}}</td>
-            <td><a role="button" ng-click="vm.fillAOrder(order.orderId)">Change</a><br>
-                <a role="button"  ng-click="vm.removeOrder(order._id)">Remove</a>
-            </td>
-        </tr>
-    </table>
-</div>
-<div class="text-center" ng-if="!vm.orders || vm.orders.length === 0">
+<div class="order_list" >
+    <div class="order_list" style="height: 200px;">
+        <div infinite-scroll='vm.ordersIScroll.nextPage()' infinite-scroll-disabled='vm.ordersIScroll.busy'style="height:200px"
+             infinite-scroll-distance='0.5'>
+        <table class="table table-striped" >
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>No.</th>
+                <th>Created</th>
+                <th>Subtotal</th>
+                <th>Cost</th>
+                <th>Items</th>
+                <th>Shipping</th>
+                <th>Address</th>
+                <th>Operation</th>
+            </tr>
+            </thead>
+            <!--<tr ng-repeat="order in vm.orders">-->
+            <!--<td>{{$index+1}}</td>-->
+            <!--<td>{{order.orderId}}</td>-->
+            <!--<td>{{order.created | date:'short'}}</td>-->
+            <!--<td>${{order.subtotal}}</td>-->
+            <!--<td><p ng-if="order.totalRmbCost">￥{{order.totalRmbCost}}</p></td>-->
+            <!--<td><p ng-repeat="item in order.items"><a href="{{item.url}}" target="_blank">{{item.name}},{{item.quantity}}*{{item.price}}</a>-->
+            <!--</p></td>-->
+            <!--<td><p ng-repeat="s in order.shipping"><a href="{{s.url}}" target="_blank">{{s.no}}</a>, <span-->
+            <!--style="color:#ff0000">{{s.status}}</span><br>{{s.items}}</p></td>-->
+            <!--<td>{{order.address.name}},{{order.address.address}}</td>-->
+            <!--<td><a role="button" ng-click="vm.fillAOrder(order.orderId)">Change</a><br>-->
+            <!--<a role="button" ng-click="vm.removeOrder(order._id)">Remove</a>-->
+            <!--</td>-->
+            <!--</tr>-->
+
+                <tr ng-repeat="order in vm.ordersIScroll.items">
+                    <td>{{$index+1}}</td>
+                    <td>{{order.orderId}}</td>
+                    <td>{{order.created | date:'short'}}</td>
+                    <td>${{order.subtotal}}</td>
+                    <td><p ng-if="order.totalRmbCost">￥{{order.totalRmbCost}}</p></td>
+                    <td><p ng-repeat="item in order.items"><a href="{{item.url}}" target="_blank">{{item.name}},{{item.quantity}}*{{item.price}}</a>
+                    </p></td>
+                    <td><p ng-repeat="s in order.shipping"><a href="{{s.url}}" target="_blank">{{s.no}}</a>, <span
+                            style="color:#ff0000">{{s.status}}</span><br>{{s.items}}</p></td>
+                    <td>{{order.address.name}},{{order.address.address}}</td>
+                    <td><a role="button" ng-click="vm.fillAOrder(order.orderId)">Change</a><br>
+                        <a role="button" ng-click="vm.removeOrder(order._id)">Remove</a>
+                    </td>
+                </tr>
+                <tr ng-show="vm.ordersIScroll.busy">
+                    <td>
+                        Loading data...
+                    </td>
+                </tr>
+        </table>
+    </div>
+    </div>
+
+
+<!--<div style='clear: both;'></div>-->
+<!--<div ng-cloak style="height: 700px;">-->
+    <!--<div infinite-scroll='vm.ordersIScroll.nextPage()'-->
+         <!--infinite-scroll-disabled='vm.ordersIScroll.busy'-->
+         <!--infinite-scroll-distance='0'>-->
+        <!--<div ng-repeat='item in vm.ordersIScroll.items'>-->
+            <!--<span>{{item.orderId}}</span>-->
+            <!--<span>{{$index+1}}</span>-->
+            <!--<span>{{order.orderId}}</span>-->
+            <!--<span>{{order.created | date:'short'}}</span>-->
+            <!--<span>${{order.subtotal}}</span>-->
+            <!--<span><p ng-if="order.totalRmbCost">￥{{order.totalRmbCost}}</p></span>-->
+        <!--<span><p ng-repeat="item in order.items"><a href="{{item.url}}" target="_blank">{{item.name}},{{item.quantity}}*{{item.price}}</a>-->
+        <!--</p></span>-->
+        <!--<span><p ng-repeat="s in order.shipping"><a href="{{s.url}}" target="_blank">{{s.no}}</a>, <span-->
+                <!--style="color:#ff0000">{{s.status}}</span><br>{{s.items}}</p></span>-->
+            <!--<span>{{order.address.name}},{{order.address.address}}</span>-->
+            <!--<div style='clear: both;'></div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div ng-show='reddit.busy'>Loading data...</div>-->
+<div style='clear: both;'></div>
+<!--<div class="text-center" ng-if="!vm.orders || vm.orders.length === 0">-->
+<div class="text-center" ng-if="!vm.ordersIScroll">
     <h3>Order is empty</h3>
 </div>

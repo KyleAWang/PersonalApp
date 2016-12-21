@@ -6,14 +6,16 @@
 
     angular.module('orders.list')
         .controller('OrdersController', OrdersController);
-    OrdersController.$inject = ['$scope', '$state', '$http', 'OrdersService'];
+    OrdersController.$inject = ['$scope', '$state', '$http', 'OrdersService', 'OrdersIScrollService'];
 
-    function OrdersController($scope, $state, $http, OrdersService) {
+    function OrdersController($scope, $state, $http, OrdersService, OrdersIScrollService) {
         var vm = this;
         vm.orders = [];
         vm.currentOrd = {};
         vm.fillAOrder = fillAOrder;
         vm.removeOrder = removeOrder;
+
+        vm.ordersIScroll = new OrdersIScrollService();
 
         $scope.status = {
             item_open: false,
@@ -22,10 +24,10 @@
             general_open: true
         };
 
-        getOrders();
+        // getOrders();
 
         function getOrders() {
-            OrdersService.query().$promise.then(function (response) {
+            OrdersService.query({offset: 10, pageno:2}).$promise.then(function (response) {
                 vm.orders = response;
                 if (vm.orders){
                     for(var i = 0; i< vm.orders.length; i++){
